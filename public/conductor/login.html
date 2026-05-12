@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Conductor Login - MahaLakshmi Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+  --primary: #0d9488;
+  --secondary: #6366f1;
+  --card-bg: rgba(15,23,42,0.96);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  min-height: 100svh; /* Better for mobile browsers */
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: #e5e7eb;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: -1;
+}
+
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  padding: 12px 22px;
+  background: linear-gradient(90deg, #0f766e, #4f46e5, #f97316);
+  background-size: 200% 200%;
+  animation: navMove 14s ease-in-out infinite;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.75);
+}
+
+@keyframes navMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f9fafb;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.home-btn {
+  padding: 7px 14px;
+  background: rgba(15,23,42,0.2);
+  border: 1px solid rgba(248,250,252,0.7);
+  border-radius: 999px;
+  color: #f9fafb;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  backdrop-filter: blur(6px);
+  transition: 0.15s ease;
+}
+
+.nav-right button {
+  margin-left: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(248,250,252,0.7);
+  background: rgba(15,23,42,0.2);
+  color: #f9fafb;
+  cursor: pointer;
+  font-size: 13px;
+  backdrop-filter: blur(6px);
+}
+
+/* WRAPPER - This handles the centering */
+.wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;     /* Vertical Center */
+  justify-content: center;   /* Horizontal Center */
+  padding-top: 60px;         /* Prevents navbar overlap */
+  z-index: 1;
+}
+
+/* THE BOX - Compact Version */
+.box {
+  position: relative;
+  width: 300px; 
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.8);
+  overflow: hidden;
+}
+
+.box::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(from 180deg, #38bdf8, #818cf8, #f97316, #38bdf8);
+  animation: spin 10s linear infinite;
+  z-index: -1;
+}
+
+.box::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: inherit;
+  background: var(--card-bg);
+  z-index: -1;
+}
+
+@keyframes spin { 100% { transform: rotate(360deg); } }
+
+h2 {
+  text-align: center;
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+  color: #f9fafb;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #4b5563;
+  margin-top: 10px;
+  background: #020617;
+  color: #f9fafb;
+  font-size: 14px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px;
+  background: linear-gradient(120deg, var(--primary), var(--secondary));
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+}
+
+#message { text-align: center; margin-top: 10px; font-size: 13px; }
+
+.text { margin-top: 12px; text-align: center; font-size: 12px; }
+.text a { color: #38bdf8; font-weight: bold; text-decoration: none; }
+
+/* ---------- REFINED CENTERED MOBILE NAV ---------- */
+
+@media (max-width: 768px) {
+    .navbar {
+        height: 50px;
+        padding: 0; /* Remove padding to allow full-width centering */
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Centers the content */
+        position: relative;
+    }
+
+    /* 1. Remove the Home button container completely */
+    .home-btn {
+        display: none !important;
+    }
+
+    /* 2. Force the title to the absolute center of the viewport */
+    .nav-left {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .nav-left span {
+        font-size: 14px;
+        font-weight: bold;
+        white-space: nowrap;
+        text-align: center;
+        color: #ffffff;
+        letter-spacing: 0.3px;
+    }
+
+    /* 3. Hide all login buttons on the right to keep the center clean */
+    .nav-right {
+        display: none !important;
+    }
+
+    /* 4. Ensure the login box remains centered and compact */
+    .wrapper {
+        padding-top: 50px; /* Aligned with nav height */
+    }
+
+    .box {
+        width: 290px;
+        max-width: 90%;
+        padding: 15px;
+    }
+
+    h2 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+    }
+}
+  </style>
+</head>
+
+<body>
+
+<video id="bg-video" autoplay muted loop>
+  <source src="/videos/hyd.mp4" type="video/mp4">
+</video>
+<div class="overlay"></div>
+
+<div class="navbar">
+  <div class="nav-left">
+    <button class="home-btn" onclick="location.href='/index.html'">🏠 Home</button>
+    <span>MahaLakshmi Conductor Panel</span>
+  </div>
+
+  <div class="nav-right">
+    <button onclick="location.href='/login.html'">User Login</button>
+    <button onclick="location.href='/admin/login.html'">Admin Login</button>
+    <button disabled>Conductor Login</button>
+    <button onclick="location.href='/conductor/register.html'">Conductor Register</button>
+  </div>
+</div>
+
+<div class="wrapper">
+  <div class="box">
+    <h2>Conductor Login</h2>
+
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+
+      <button type="submit">Login</button>
+
+      <button type="button" id="gpsBtn" style="
+        width:100%;
+        margin-top:10px;
+        padding:10px;
+        border-radius:999px;
+        border:1px solid #38bdf8;
+        background:transparent;
+        color:#38bdf8;
+        font-weight:bold;
+      ">
+      📍 Enable GPS & Continue
+      </button>
+
+      <p id="message"></p>
+
+      <div class="text">
+        New conductor?
+        <a href="/conductor/register.html">Register</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+let loginSuccess = false;
+
+/* ---------------- LOGIN HANDLER ---------------- */
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const msg = document.getElementById("message");
+  msg.style.color = "#38bdf8";
+  msg.textContent = "Logging in...";
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  try {
+    const res = await fetch("/conductor/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      msg.style.color = "#f97316";
+      msg.textContent = data.msg || "Login failed";
+      return;
+    }
+
+    // ✅ Login success
+    localStorage.setItem("conductorToken", data.token);
+    loginSuccess = true;
+
+    msg.style.color = "#22c55e";
+    msg.textContent = "Login successful. Tap below to enable GPS.";
+
+  } catch (err) {
+    msg.style.color = "#f97316";
+    msg.textContent = "Server error. Try again.";
+  }
+});
+
+/* ---------------- GPS BUTTON (USER ACTION) ---------------- */
+document.getElementById("gpsBtn").addEventListener("click", () => {
+  const msg = document.getElementById("message");
+
+  if (!loginSuccess) {
+    msg.style.color = "#f97316";
+    msg.textContent = "Please login first";
+    return;
+  }
+
+  if (!navigator.geolocation) {
+    localStorage.setItem("trackingEnabled", "false");
+    msg.style.color = "#f97316";
+    msg.textContent = "GPS not supported. Redirecting...";
+    setTimeout(() => {
+      location.href = "/conductor/dashboard.html";
+    }, 800);
+    return;
+  }
+
+  msg.style.color = "#38bdf8";
+  msg.textContent = "Requesting GPS permission...";
+
+  navigator.geolocation.getCurrentPosition(
+    () => {
+      // ✅ GPS allowed
+      localStorage.setItem("trackingEnabled", "true");
+      msg.style.color = "#22c55e";
+      msg.textContent = "GPS Enabled ✔ Redirecting...";
+      setTimeout(() => {
+        location.href = "/conductor/dashboard.html";
+      }, 800);
+    },
+    (err) => {
+      // ❌ GPS denied / unavailable
+      localStorage.setItem("trackingEnabled", "false");
+
+      if (err.code === err.PERMISSION_DENIED) {
+        msg.textContent = "GPS denied. Enable it from browser settings.";
+      } else {
+        msg.textContent = "GPS unavailable.";
+      }
+
+      msg.style.color = "#f97316";
+
+      setTimeout(() => {
+        location.href = "/conductor/dashboard.html";
+      }, 1200);
+    },
+    {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 0
+    }
+  );
+});
+</script>
+
+</body>
+</html>
